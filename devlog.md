@@ -2,7 +2,7 @@
 
 
 
-\## 11/13/2026 11:14 CST | Project start
+\## 11/13/2026 11:14 PM CST | Project start
 
 
 
@@ -18,7 +18,7 @@ Then I will run the program and check how the bank closes.
 
 
 
-\## 11/13/2026 11:20 CST | Session 1 start
+\## 11/13/2026 11:20 PM CST | Session 1 start
 
 
 
@@ -32,7 +32,7 @@ and how the customer knows the transaction is done.
 
 
 
-\## 11/13/2026 11:36 CST | Session 1 end
+\## 11/13/2026 11:36 PM CST | Session 1 end
 
 
 
@@ -51,4 +51,22 @@ I saw how the semaphores keep these steps in order. In the next
 session, I plan to test the full bank with three tellers and 50
 
 customers and check how they share the door, manager, and safe.
+
+
+
+
+
+
+
+\## 11/14/2026 12:46 AM CST | Session 2 start
+
+
+
+The one-customer prototype ran and closed the bank after the customer
+
+left. I plan to bring in the version with three tellers and 50 customers.
+
+I will check that all three tellers are ready before customers enter
+
+and that a teller visits the manager before taking a withdrawal to the safe.
 
