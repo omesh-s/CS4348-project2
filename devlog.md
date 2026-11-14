@@ -32,5 +32,23 @@ and how the customer knows the transaction is done.
 
 
 
+\## 11/13/2026 11:36 CST | Session 1 end
 
+
+
+I ran the one-customer prototype in PowerShell. The customer waited
+
+for the teller to ask, then sent a deposit request. The teller
+
+signaled when the deposit was done. The customer left, the teller
+
+exited, and the bank closed.
+
+
+
+I saw how the semaphores keep these steps in order. In the next
+
+session, I plan to test the full bank with three tellers and 50
+
+customers and check how they share the door, manager, and safe.
 
