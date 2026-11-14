@@ -70,3 +70,25 @@ I will check that all three tellers are ready before customers enter
 
 and that a teller visits the manager before taking a withdrawal to the safe.
 
+
+
+
+
+
+
+\## 11/14/2026 12:54 AM CST | Session 2 end
+
+
+
+I ran the full-bank version in PowerShell. The log showed 50
+
+customers leaving the bank and three tellers leaving for the day.
+
+The bank closed on the last line.
+
+
+
+In the next session, I plan to run more tests and check that the
+
+submission ZIP includes the Git history.
+
