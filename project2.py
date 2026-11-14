@@ -3,10 +3,11 @@
 from collections import deque
 import random
 import threading
+import time
 
 
-TELLER_COUNT = 1
-CUSTOMER_COUNT = 1
+TELLER_COUNT = 3
+CUSTOMER_COUNT = 50
 
 
 class Visit:
@@ -30,6 +31,10 @@ class Bank:
         self.line_lock = threading.Semaphore(1)
         self.output_lock = threading.Semaphore(1)
         self.customers_waiting = threading.Semaphore(0)
+        self.tellers_ready = threading.Semaphore(0)
+        self.door = threading.Semaphore(2)
+        self.manager = threading.Semaphore(1)
+        self.safe = threading.Semaphore(2)
         self.closed = False
 
     def log(self, actor, message, partner=""):
@@ -38,12 +43,15 @@ class Bank:
 
     def serve(self, teller_id):
         teller = f"Teller {teller_id}"
+        self.log(teller, "ready to serve")
+        self.tellers_ready.release()
+
         while True:
-            self.log(teller, "ready to serve")
             self.log(teller, "waiting for a customer")
             self.customers_waiting.acquire()
 
             with self.line_lock:
+                # Shutdown sends one wake-up per teller after all visits end.
                 if self.closed:
                     break
                 visit = self.line.popleft()
@@ -62,11 +70,26 @@ class Bank:
 
             transaction = visit.transaction
             self.log(teller, f"handling {transaction} transaction", customer)
+
+            if transaction == "withdrawal":
+                self.log(teller, "going to the manager", customer)
+                with self.manager:
+                    self.log(teller, "getting manager's permission", customer)
+                    time.sleep(random.randint(5, 30) / 1000)
+                    self.log(teller, "got manager's permission", customer)
+
+            self.log(teller, "going to safe", customer)
+            with self.safe:
+                self.log(teller, "enter safe", customer)
+                time.sleep(random.randint(10, 50) / 1000)
+                self.log(teller, "leaving safe", customer)
+
             self.log(teller, f"finishes {transaction} transaction.", customer)
             self.log(teller, "wait for customer to leave.", customer)
             visit.finished.release()
             visit.left_teller.acquire()
             self.log(teller, "customer left teller", customer)
+            self.log(teller, "ready to serve")
 
         self.log(teller, "leaving for the day")
 
@@ -75,6 +98,12 @@ class Bank:
         customer = f"Customer {customer_id}"
         transaction = random.choice(("deposit", "withdrawal"))
         self.log(customer, f"wants to perform a {transaction} transaction")
+        time.sleep(random.randint(0, 100) / 1000)
+
+        self.log(customer, "going to bank.")
+        with self.door:
+            self.log(customer, "entering bank.")
+            self.log(customer, "entered the bank")
 
         with self.line_lock:
             self.log(customer, "getting in line.")
@@ -101,6 +130,11 @@ class Bank:
         self.log(customer, "leaves teller", teller)
         visit.left_teller.release()
 
+        self.log(customer, "goes to door")
+        with self.door:
+            self.log(customer, "exiting through the door")
+            self.log(customer, "leaves the bank")
+
     def run(self):
         tellers = [
             threading.Thread(target=self.serve, args=(i,))
@@ -113,6 +147,8 @@ class Bank:
 
         for teller in tellers:
             teller.start()
+        for _ in tellers:
+            self.tellers_ready.acquire()
         for customer in customers:
             customer.start()
         for customer in customers:
