@@ -92,3 +92,27 @@ In the next session, I plan to run more tests and check that the
 
 submission ZIP includes the Git history.
 
+
+
+
+
+\## 11/15/2026 1:52 AM CST | Session 3 start
+
+
+
+I tested the full-bank version in Session 2. I plan to review the
+
+final change to the teller's wait message and run the program again.
+
+I will check that all 50 customers leave, all three tellers exit,
+
+and the bank closes. Then I will check the README and make sure
+
+the submission ZIP includes the Git history.
+
+
+
+
+
+
+
