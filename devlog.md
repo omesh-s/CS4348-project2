@@ -114,5 +114,25 @@ the submission ZIP includes the Git history.
 
 
 
+\## 11/15/2026 2:15 AM CST | Session 3 end
+
+
+
+I ran the final version in PowerShell. The log showed 50 customers
+
+and three tellers leave. The bank closed on the last line.
+
+
+
+I checked five teller and customer pairs. In each pair, the teller
+
+printed its wait message before the customer introduced itself.
+
+The next step is to check that the submission ZIP includes the
+
+Git history.
+
+
+
 
 
