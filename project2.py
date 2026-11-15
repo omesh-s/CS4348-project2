@@ -1,4 +1,4 @@
-﻿"""Run the Project 2 bank simulation."""
+"""Run the Project 2 bank simulation."""
 
 from collections import deque
 import random
@@ -58,9 +58,9 @@ class Bank:
                 customer = f"Customer {visit.customer_id}"
                 visit.teller_id = teller_id
                 self.log(teller, "calls customer from line", customer)
+                self.log(teller, "waiting for customer to approach", customer)
                 visit.called.release()
 
-            self.log(teller, "waiting for customer to approach", customer)
             visit.introduced.acquire()
             self.log(teller, "serving a customer", customer)
             self.log(teller, "asks for transaction", customer)
